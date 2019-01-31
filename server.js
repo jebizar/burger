@@ -1,29 +1,23 @@
-var express = require("express");
-
-
+var burgers=require("./controllers/burgers_controller.js");
+var express=require("express");
 var app = express();
-var PORT = process.env.PORT || 8080;
-
-
+var path = require('path');
+var PORT=process.env.PORT||3000
+// Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-var exphbs = require("express-handlebars");
+// set your static files
 
+app.use(express.static(__dirname + '/public'));
+
+var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "handlebars");
 
-connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
+app.use('/', burgers);
 
-  console.log("connected as id " + connection.threadId);
-});
-
-require("./controllers/burgers_controller.js")(app);
-
-app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+app.listen(PORT,function(){
+    console.log("app is listening "+PORT);
 });

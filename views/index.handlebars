@@ -1,0 +1,29 @@
+<div class ='row'>
+    <div class = 'col'>
+        <ul>
+            {{#each burgers}}
+            {{#unless this.devoured}}
+                <li>
+                    <p>{{this.burger_name}}</p>
+                    <form action="/api/burgers/{{this.id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="devoured" value="true">
+					<button type="submit">Eat</button>
+				</form>
+                </li>
+            {{/unless}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class = 'col'>
+        <ul>
+            {{#each burgers}}
+            {{#if this.devoured}}
+                <li>
+                    <p>{{this.burger_name}}</p>
+                </li>
+            {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+</div>
+

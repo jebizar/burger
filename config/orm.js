@@ -1,31 +1,30 @@
-var connection = require('./connection');
+var connection = require('./connection.js');
 
 var orm = {
-    selectAll: function(cb){
-        var queryString = 'select * from burgers';
-        connection.query(queryString, function(err, res){
+    // The last variable cb represents the anonymous function being passed from server.js
+    selectAll: function(table, cb){
+        var queryString = "SELECT * FROM ??";
+        connection.query(queryString, [table], function(err, res){
             if(err) throw err;
-            console.log(cb(res));
             cb(res);
-        })
+            
+        });
     },
-
-    insertOne: function(burgerName, cb) {
-        var queryString = 'insert into burgers(burger_name) values ("?")';
-        connection.query(queryString, [burgerName], function(err, res){
+    insertOne: function (table, col, val, cb) {
+        var queryString = "INSERT INTO ?? (??) VALUES(?)";
+        connection.query(queryString, [table, col, val], function(err, res){
             if(err) throw err;
-            console.log(cb(res));
             cb(res);
-        })
+            
+        });
     },
-
-    updateOne: function(burgerName, cb){
-        var queryString = 'update burgers set devoured = true where ?';
-        connection.query(queryString,[burgerName], function(err,res){
+    updateOne: function (table, col, val, id,cb) {
+        var queryString = "UPDATE ?? SET ??=? WHERE id= ?";
+        connection.query(queryString, [table, col, val,id], function(err, res){
             if(err) throw err;
-            console.log(cb(res));
             cb(res);
-        })
+            
+        });
     }
 };
 
